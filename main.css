@@ -1,0 +1,51 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background: #1e1e1e; /* Dark background */
+  color: #fff; /* White text color for contrast */
+}
+
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  position: relative;
+}
+.loading-container .spinner {
+  border: 8px solid rgba(255, 255, 255, 0.2); /* Light gray border */
+  border-radius: 50%;
+  border-top: 8px solid white; /* Red color */
+  border-bottom: 8px solid white; /* White color */
+  box-shadow: 0 0 15px rgba(255, 0, 0, 0), 0 0 20px rgba(255, 255, 255, 0.5); /* Glowing effect */
+  width: 250px;
+  height: 250px;
+  animation: spin 20s linear infinite, glow 1.5s alternate infinite;
+}
+.loading-container .text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 16px;
+  color: #00bcd4; /* Teal color */
+  text-align: center;
+}
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes glow {
+  0% {
+    box-shadow: 0 0 15px rgba(255, 0, 0, 0), 0 0 20px rgba(255, 255, 255, 0.5); /* Initial glow effect */
+  }
+  100% {
+    box-shadow: 0 0 25px rgba(255, 0, 0, 0), 0 0 30px rgba(255, 255, 255, 0.7); /* Enhanced glow effect */
+  }
+}
