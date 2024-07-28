@@ -1,10 +1,6 @@
 async function fetchData() {
-  const sheetId = "1YVu3PszcFrC9-arFm1qcy5XSmNi-orj7U6UONG2Boz4"; // Replace with your actual sheet ID
-  const range = "heartbeat!A:C"; // Replace with your actual range
-  const pulsebot = "AIzaSyC-cDc5zk9gTtvgMbkz9OnWFmZGN8Iqkgg"; // Replace with your API key if needed
-
   const response = await fetch(
-    `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${range}?key=${pulsebot}`
+    "https://api-data-proxy.glitch.me/pulsebot-data"
   );
   const data = await response.json();
   return data.values.slice(1).map((row) => ({
@@ -16,22 +12,33 @@ async function fetchData() {
 
 async function drawChart() {
   const data = await fetchData();
-  updateCountdown(30, data[0]["status"], data[0]["date"]); // 30 seconds countdown
+  updateCountdown(60, data[0]["status"], data[0]["date"].split(" ")[0]); // 30 seconds countdown
   console.log(data[0]["status"]);
 }
 
 function updateCountdown(seconds, status, time) {
-  const statusText = document.getElementById("status-text");
-
+  const timeElement = document.getElementById("time_new");
+  const statusElement = document.getElementById("status");
+  const spinnerElement = document.getElementById("spinner");
+  const dateElement = document.getElementById("date");
+  dateElement.textContent = `(${time})`;
   let remainingTime = seconds;
+  if (status === "ON") {
+    statusElement.textContent = "ON";
+    statusElement.className = "status-on";
+    // spinnerElement.className = "DG-ON";
+  } else {
+    statusElement.textContent = "OFF";
+    statusElement.className = "status-off";
+    // spinnerElement.className = "DG-OFF";
+  }
 
   const interval = setInterval(() => {
     if (remainingTime <= 0) {
       clearInterval(interval);
-      statusText.textContent = `DG is ${status}: (${time})`;
       drawChart();
     } else {
-      statusText.textContent = `DG is ${status}: ${remainingTime}s`;
+      timeElement.textContent = `${remainingTime}s`;
       remainingTime--;
     }
   }, 1000);
