@@ -12,6 +12,7 @@ async function fetchData() {
 
 async function drawChart() {
   const data = await fetchData();
+  console.log("data ::", data);
   updateCountdown(60, data[0]["status"], data[0]["date"].split(" ")[0]); // 30 seconds countdown
   console.log(data[0]["status"]);
 }
@@ -33,14 +34,14 @@ function updateCountdown(seconds, status, time) {
     // spinnerElement.className = "DG-OFF";
   }
 
-  const interval = setInterval(() => {
-    if (remainingTime <= 0) {
-      clearInterval(interval);
-      drawChart();
-    } else {
-      timeElement.textContent = `${remainingTime}s`;
-      remainingTime--;
-    }
-  }, 1000);
+  // const interval = setInterval(() => {
+  //   if (remainingTime <= 0) {
+  //     clearInterval(interval);
+  //     drawChart();
+  //   } else {
+  //     timeElement.textContent = `${remainingTime}s`;
+  //     remainingTime--;
+  //   }
+  // }, 1000);
 }
 drawChart();
